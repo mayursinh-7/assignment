@@ -19,13 +19,13 @@
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="off" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="off" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -45,6 +45,40 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <div>
+            <x-input-label for="gender" :value="__('Gender')" />
+            <label for="male" class="font-medium text-sm text-gray-700 dark:text-gray-300">
+                <input id="male" name="gender" type="radio" value="Male" {{ $user->gender == 'Male' ? 'checked' : '' }}> Male
+            </label>
+            <label for="female" class="font-medium text-sm text-gray-700 dark:text-gray-300">
+                <input id="female" name="gender" type="radio" value="Female" {{ $user->gender == 'Female' ? 'checked' : '' }}> Female
+            </label>
+            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+        </div>
+
+        <div>
+            <x-input-label for="phone" :value="__('Phone')" />
+            <x-text-input id="phone" name="phone" type="number" class="mt-1 block w-full" :value="old('phone', $user->phone)" required autofocus autocomplete="off" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+        </div>
+
+        <div>
+            <x-input-label for="pincode" :value="__('PIN Code')" />
+            <x-text-input id="pincode" name="pincode" type="number" class="mt-1 block w-full" :value="old('pincode', $user->pincode)" required autofocus autocomplete="off" />
+            <x-input-error class="mt-2" :messages="$errors->get('pincode')" />
+        </div>
+
+        <div>
+            <x-input-label for="state" :value="__('State')" />
+            <select id="state" name="state" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                <option value="">Select State</option>
+                @foreach ($states as $key => $value)
+                    <option value="{{ $key }}" {{ (old('state') ? old('state') : $user->state) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('state')" />
         </div>
 
         <div class="flex items-center gap-4">
